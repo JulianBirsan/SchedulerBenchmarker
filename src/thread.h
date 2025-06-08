@@ -20,6 +20,9 @@ private:
     // the state of the thread
     ThreadState state;
 
+    // computes if thread should block in this time slice
+    bool should_block() const;
+
 public:
     Thread(
         int id, 
@@ -32,17 +35,17 @@ public:
     // getter for id
     int get_id() const;
 
-    // computes if thread should block in this time slice
-    bool should_block() const;
+    // getter for state
+    ThreadState get_state() const;
 
     // computes block time for thread
     int get_block_time() const;
 
-    // checks if thread is done
-    bool is_complete() const;
-
     // preempt this thread
     void preempt();
+
+    // run thread for one time slice
+    void run();
 };
 
 #endif

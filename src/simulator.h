@@ -7,12 +7,13 @@
 
 #include "scheduler.h"
 
-enum class EventType { THREAD_ARRIVAL, UNBLOCK_THREAD, TICK };
+// TODO: are there any events outside of thread arrivals?
+enum class EventType { THREAD_ARRIVAL, TICK };
 
 struct Event {
     int time;
     EventType type;
-    std::unique_ptr<Thread> thread;
+    std::shared_ptr<Thread> thread;
 
     bool operator<(const Event &o) const {
         return time < o.time;
@@ -25,6 +26,10 @@ private:
     std::unique_ptr<Scheduler> scheduler;
     // queue of events to process, defined by the test
     std::priority_queue<Event, std::vector<Event>, std::greater<Event>> event_queue;
+    // current running thread
+    std::shared_ptr<Thread> current_thread;
+    // the current time slice
+    int current_time;
 
 public:
     Simulator(std::unique_ptr<Scheduler> scheduler);
