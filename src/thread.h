@@ -3,6 +3,8 @@
 
 enum class ThreadState { READY, RUNNING, BLOCKED, TERMINATED };
 
+// Simplest interface for a thread, can be inherited by schedulers
+// to add additional metadata
 class Thread {
 private:
     // unique identifier of thread
@@ -38,6 +40,9 @@ public:
 
     // checks if thread is done
     bool is_complete() const;
+
+    // preempt this thread
+    void preempt();
 };
 
 #endif

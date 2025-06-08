@@ -20,6 +20,9 @@ public:
 
     // Called when a thread is done
     virtual void handle_thread_done(std::unique_ptr<Thread> thread) = 0;
+
+    // Do something during a tick
+    virtual void handle_tick() = 0;
 };
 
 #endif

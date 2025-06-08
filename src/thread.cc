@@ -34,3 +34,7 @@ bool Thread::is_complete() const {
     return remaining_run_time <= 0;
 }
 
+void Thread::preempt() {
+    state = ThreadState::READY;
+}
+
