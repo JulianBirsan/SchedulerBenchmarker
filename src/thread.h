@@ -1,0 +1,43 @@
+#ifndef THREAD_H
+#define THREAD_H
+
+enum class ThreadState { READY, RUNNING, BLOCKED, TERMINATED };
+
+class Thread {
+private:
+    // unique identifier of thread
+    int id;
+    // remaining time that this thread needs to run
+    int remaining_run_time;
+    // probability for thread to block in a time slice 
+    double block_chance;
+    // the average time for thread to block
+    int avg_block_duration;
+    // the standard deviation of time a thread blocks
+    int sd_block_duration;
+    // the state of the thread
+    ThreadState state;
+
+public:
+    Thread(
+        int id, 
+        int remaining_run_time, 
+        double block_chance, 
+        int avg_block_duration, 
+        int sd_block_duration
+    );
+
+    // getter for id
+    int get_id() const;
+
+    // computes if thread should block in this time slice
+    bool should_block() const;
+
+    // computes block time for thread
+    int get_block_time() const;
+
+    // checks if thread is done
+    bool is_complete() const;
+};
+
+#endif
