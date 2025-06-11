@@ -7,6 +7,7 @@ void Simulator::add_event(const Event& event) {
 }
 
 void Simulator::simulate_events() {
+    // TODO: keep track of time for scheduler to make each decision
     // we are done if there are no more arriving threads and no running thread
     while (!event_queue.empty() || current_thread.get() != nullptr) {
         // go to next time slice
@@ -19,7 +20,7 @@ void Simulator::simulate_events() {
             current_time = event.time;
 
             if (event.type == EventType::THREAD_ARRIVAL) {
-                // TODO: make sure it is ready first
+                event.thread.get()->make_ready();
                 scheduler.get()->handle_new_thread(event.thread);
             }
         }
@@ -44,6 +45,10 @@ void Simulator::simulate_events() {
                 });
                 // the thread will be replaced in the NEXT time slice
                 current_thread = nullptr;
+            } else if (current_thread.get()->get_state() == ThreadState::READY) {
+                // the thread just got preempted
+                scheduler.get()->handle_new_thread(current_thread);
+                current_thread = scheduler.get()->select_thread();
             } else if (current_thread.get()->get_state() == ThreadState::TERMINATED) {
                 // TODO: log information
                 current_thread = nullptr;

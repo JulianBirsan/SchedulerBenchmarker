@@ -38,6 +38,9 @@ public:
     // getter for state
     ThreadState get_state() const;
 
+    // makes thread in ready state
+    void make_ready();
+
     // computes block time for thread
     int get_block_time() const;
 

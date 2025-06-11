@@ -25,6 +25,10 @@ ThreadState Thread::get_state() const {
     return state;
 }
 
+void Thread::make_ready() {
+    state = ThreadState::READY;
+}
+
 bool Thread::should_block() const {
     return (rand() / (double)RAND_MAX) < block_chance;
 }

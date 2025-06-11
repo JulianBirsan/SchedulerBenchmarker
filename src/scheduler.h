@@ -21,8 +21,8 @@ public:
     // Called when a thread is done
     virtual void handle_thread_done(std::shared_ptr<Thread> thread) = 0;
 
-    // Do something during a tick, where thread is the current running thread
-    virtual void handle_tick(std::shared_ptr<Thread> thread) = 0;
+    // Do something during a tick
+    virtual void handle_tick(std::shared_ptr<Thread> current_thread) = 0;
 };
 
 #endif
