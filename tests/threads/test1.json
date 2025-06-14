@@ -1,0 +1,44 @@
+{
+    "threads": [
+        {
+            "id": 1,
+            "remaining_run_time": 100,
+            "block_chance": 0.1,
+            "avg_block_duration": 5,
+            "sd_block_duration": 2,
+            "arrival_time": 0
+        },
+        {
+            "id": 2,
+            "remaining_run_time": 150,
+            "block_chance": 0.2,
+            "avg_block_duration": 8,
+            "sd_block_duration": 3,
+            "arrival_time": 1
+        },
+        {
+            "id": 3,
+            "remaining_run_time": 80,
+            "block_chance": 0.05,
+            "avg_block_duration": 3,
+            "sd_block_duration": 1,
+            "arrival_time": 5
+        },
+        {
+            "id": 4,
+            "remaining_run_time": 200,
+            "block_chance": 0.3,
+            "avg_block_duration": 10,
+            "sd_block_duration": 4,
+            "arrival_time": 2
+        },
+        {
+            "id": 5,
+            "remaining_run_time": 120,
+            "block_chance": 0.15,
+            "avg_block_duration": 6,
+            "sd_block_duration": 2,
+            "arrival_time": 0
+        }
+    ]
+}

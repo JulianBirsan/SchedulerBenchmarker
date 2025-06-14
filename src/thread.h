@@ -3,8 +3,7 @@
 
 enum class ThreadState { READY, RUNNING, BLOCKED, TERMINATED };
 
-// Simplest interface for a thread, can be inherited by schedulers
-// to add additional metadata
+// Interface for a thread
 class Thread {
 private:
     // unique identifier of thread
@@ -19,6 +18,8 @@ private:
     int sd_block_duration;
     // the state of the thread
     ThreadState state;
+    // the arrival time of the thread
+    int arrival_time;
 
     // computes if thread should block in this time slice
     bool should_block() const;
@@ -29,7 +30,8 @@ public:
         int remaining_run_time, 
         double block_chance, 
         int avg_block_duration, 
-        int sd_block_duration
+        int sd_block_duration,
+        int arrival_time
     );
 
     // getter for id
@@ -37,6 +39,9 @@ public:
 
     // getter for state
     ThreadState get_state() const;
+
+    // getter for arrival time
+    int get_arrival_time() const;
 
     // makes thread in ready state
     void make_ready();

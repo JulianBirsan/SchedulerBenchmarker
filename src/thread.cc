@@ -7,15 +7,16 @@ Thread::Thread(
     int remaining_run_time,
     double block_chance, 
     int avg_block_duration, 
-    int sd_block_duration
+    int sd_block_duration,
+    int arrival_time
 ) :
     id{id},
     remaining_run_time{remaining_run_time},
     block_chance{block_chance},
     avg_block_duration{avg_block_duration},
-    sd_block_duration{sd_block_duration} {
-        state = ThreadState::READY;
-    }
+    sd_block_duration{sd_block_duration},
+    arrival_time{arrival_time},
+    state{ThreadState::READY} {}
 
 int Thread::get_id() const {
     return id;
@@ -23,6 +24,10 @@ int Thread::get_id() const {
 
 ThreadState Thread::get_state() const {
     return state;
+}
+
+int Thread::get_arrival_time() const {
+    return arrival_time;
 }
 
 void Thread::make_ready() {
