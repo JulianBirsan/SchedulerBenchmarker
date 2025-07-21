@@ -7,6 +7,12 @@
 
 #include "scheduler.h"
 
+// stores the metrics we want to collect
+struct Metrics {
+    Metrics(int turn_around_time) : turn_around_time{turn_around_time} {}
+    int turn_around_time;
+};
+
 // TODO: are there any events outside of thread arrivals?
 enum class EventType { THREAD_ARRIVAL, TICK };
 
@@ -30,13 +36,18 @@ private:
     std::shared_ptr<Thread> current_thread;
     // the current time slice
     int current_time;
-
+    // collect metrics about the thread that just finished
+    void handle_thread_done(int arrival_time, int end_time);
+    // total turn around time
+    int turn_around_time;
 public:
     Simulator(std::unique_ptr<Scheduler> scheduler);
     // add an event to the queue
     void add_event(const Event& event);
     // main simulation logic
     void simulate_events();
+    // return metrics of simulation
+    Metrics get_metrics();
 };
 
 #endif

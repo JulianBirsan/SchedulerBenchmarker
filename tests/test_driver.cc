@@ -4,7 +4,7 @@
 #include <iostream>
 
 TestDriver::TestDriver(std::unique_ptr<Scheduler> scheduler) 
-    : scheduler(std::move(scheduler)) {}
+    : simulator(std::make_unique<Simulator>(std::move(scheduler))) {}
 
 std::vector<std::shared_ptr<Thread>> TestDriver::create_threads_from_json(const nlohmann::json& test_config) {
     std::vector<std::shared_ptr<Thread>> threads;
@@ -25,7 +25,7 @@ std::vector<std::shared_ptr<Thread>> TestDriver::create_threads_from_json(const 
 
 void TestDriver::setup_simulation(const std::vector<std::shared_ptr<Thread>>& threads) {
     for (const auto& thread : threads) {
-        simulator.add_event({
+        simulator->add_event({
             thread->get_arrival_time(), 
             EventType::THREAD_ARRIVAL,
             thread
@@ -33,19 +33,7 @@ void TestDriver::setup_simulation(const std::vector<std::shared_ptr<Thread>>& th
     }
 }
 
-TestResult TestDriver::collect_metrics(const Simulator& simulator, const std::vector<std::shared_ptr<Thread>>& threads) {
-    TestResult result;
-    
-    // TODO: Implement actual metric collection
-    // This would require adding methods to Simulator and Thread to track:
-    // - Blocked time
-    // - Wait time
-    // - Turnaround time
-    
-    return result;
-}
-
-TestResult TestDriver::run_test(const std::string& test_file) {
+Metrics TestDriver::run_test(const std::string& test_file) {
     // Load test configuration
     std::ifstream file(test_file);
     if (!file.is_open()) {
@@ -59,17 +47,17 @@ TestResult TestDriver::run_test(const std::string& test_file) {
     std::vector<std::shared_ptr<Thread>> threads = create_threads_from_json(test_config);
     
     // Setup simulation
-    setup_simulation(simulator, threads);
+    setup_simulation(threads);
     
     // Run simulation
-    simulator.simulate_events();
+    simulator->simulate_events();
     
     // Collect and return metrics
-    return collect_metrics(simulator, threads);
+    return simulator->get_metrics();
 }
 
-std::vector<TestResult> TestDriver::run_all_tests(const std::string& test_dir) {
-    std::vector<TestResult> results;
+std::vector<Metrics> TestDriver::run_all_tests(const std::string& test_dir) {
+    std::vector<Metrics> results;
     
     for (const auto& entry : std::filesystem::directory_iterator(test_dir)) {
         if (entry.path().extension() == ".json") {

@@ -44,7 +44,7 @@ int Thread::get_block_time() const {
 }
 
 void Thread::preempt() {
-    state = ThreadState::READY;
+    make_ready();
 }
 
 void Thread::run() {
