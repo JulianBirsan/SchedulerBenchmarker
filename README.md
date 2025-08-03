@@ -140,12 +140,12 @@ Threads are defined in JSON files under `tests/threads/`. Each thread has the fo
 
 ### Thread Properties
 
-id: Unique thread identifier
-remaining_run_time: Total CPU time slices needed to run the thread
-block_chance: Probability (0.0 - 1.0) of blocking per tick
-avg_block_duration: Average time slices the thread will block for
-sd_block_duration: Standard deviation of the block duration
-arrival_time: When the thread arrives
+- id: Unique thread identifier
+- remaining_run_time: Total CPU time slices needed to run the thread
+- block_chance: Probability (0.0 - 1.0) of blocking per tick
+- avg_block_duration: Average time slices the thread will block for
+- sd_block_duration: Standard deviation of the block duration
+- arrival_time: When the thread arrives
 
 ## API Reference
 
