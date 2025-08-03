@@ -19,7 +19,6 @@ void RoundRobin::handle_tick(std::shared_ptr<Thread> current_thread) {
         remaining--;
         if (remaining == 0) {
             current_thread->preempt();
-            queue.push(current_thread);
         }
     }
 }

@@ -46,6 +46,9 @@ public:
     // makes thread in ready state
     void make_ready();
 
+    // put thread in running state
+    void start();
+
     // computes block time for thread
     int get_block_time() const;
 

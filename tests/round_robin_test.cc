@@ -8,6 +8,7 @@ int main() {
     TestDriver driver(std::make_unique<RoundRobin>(4));
     std::vector<Metrics> metrics = driver.run_all_tests("tests/threads");
     for (auto& metric: metrics) {
+        std::cout << "turn around time: ";
         std::cout << metric.turn_around_time << "\n";
     }
     return 0;

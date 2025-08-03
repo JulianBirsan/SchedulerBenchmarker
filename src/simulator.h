@@ -24,6 +24,9 @@ struct Event {
     bool operator<(const Event &o) const {
         return time < o.time;
     }
+    bool operator>(const Event &o) const {
+        return time > o.time;
+    }
 };
 
 class Simulator {

@@ -15,8 +15,8 @@ Thread::Thread(
     block_chance{block_chance},
     avg_block_duration{avg_block_duration},
     sd_block_duration{sd_block_duration},
-    arrival_time{arrival_time},
-    state{ThreadState::READY} {}
+    state{ThreadState::READY},
+    arrival_time{arrival_time} {}
 
 int Thread::get_id() const {
     return id;
@@ -32,6 +32,10 @@ int Thread::get_arrival_time() const {
 
 void Thread::make_ready() {
     state = ThreadState::READY;
+}
+
+void Thread::start() {
+    state = ThreadState::RUNNING;
 }
 
 bool Thread::should_block() const {

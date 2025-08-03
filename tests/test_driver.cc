@@ -45,13 +45,13 @@ Metrics TestDriver::run_test(const std::string& test_file) {
     
     // Create threads from configuration
     std::vector<std::shared_ptr<Thread>> threads = create_threads_from_json(test_config);
-    
+
     // Setup simulation
     setup_simulation(threads);
-    
+
     // Run simulation
     simulator->simulate_events();
-    
+
     // Collect and return metrics
     return simulator->get_metrics();
 }

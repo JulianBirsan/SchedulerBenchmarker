@@ -10,9 +10,6 @@ void Simulator::simulate_events() {
     // TODO: keep track of time for scheduler to make each decision
     // we are done if there are no more arriving threads and no running thread
     while (!event_queue.empty() || current_thread != nullptr) {
-        // go to next time slice
-        current_time++;
-
         // process events that occur at this time
         while (!event_queue.empty() && event_queue.top().time == current_time) {
             Event event = event_queue.top();
@@ -24,15 +21,11 @@ void Simulator::simulate_events() {
             }
         }
 
-        // first, let current thread run (or block itself) for a time slice
-
-        if (current_thread == nullptr) {
-            // no current running thread, let scheduler select a new one
-            current_thread = scheduler->select_thread();
-        } else {
+        // if there is a current running thread, let it run (or block itself) for a time slice
+        if (current_thread != nullptr) {
             // running thread must be in running state
-            assert (current_thread->get_state() != ThreadState::RUNNING);
-    
+            assert (current_thread->get_state() == ThreadState::RUNNING);
+
             current_thread->run();
 
             if (current_thread->get_state() == ThreadState::BLOCKED) {
@@ -44,18 +37,31 @@ void Simulator::simulate_events() {
                 });
                 // the thread will be replaced in the NEXT time slice
                 current_thread = nullptr;
-            } else if (current_thread->get_state() == ThreadState::READY) {
-                // the thread just got preempted
-                scheduler->handle_new_thread(current_thread);
-                current_thread = nullptr;
             } else if (current_thread->get_state() == ThreadState::TERMINATED) {
                 // TODO: log information
                 handle_thread_done(current_thread->get_arrival_time(), current_time);
                 current_thread = nullptr;
+            } else {
+                // let the scheduler handle the time slice
+                scheduler->handle_tick(current_thread);
+                if (current_thread->get_state() == ThreadState::READY) {
+                    // the thread just got preempted
+                    scheduler->handle_new_thread(current_thread);
+                    current_thread = nullptr;
+                }
             }
-            // let the scheduler handle the time slice
-            scheduler->handle_tick(current_thread);
         }
+
+        // no current running thread, let scheduler select a new one for next time slice
+        if (current_thread == nullptr) {
+            current_thread = scheduler->select_thread();
+            if (current_thread != nullptr) {
+                assert (current_thread->get_state() == ThreadState::READY);
+                current_thread->start();
+            }
+        }
+        // go to next time slice
+        current_time++;
     }
 }
 
