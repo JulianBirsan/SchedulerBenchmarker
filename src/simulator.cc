@@ -46,7 +46,6 @@ void Simulator::simulate_events() {
                 scheduler->handle_tick(current_thread);
                 if (current_thread->get_state() == ThreadState::READY) {
                     // the thread just got preempted
-                    scheduler->handle_new_thread(current_thread);
                     current_thread = nullptr;
                 }
             }

@@ -7,7 +7,7 @@
 
 class Scheduler {
 public:
-    virtual ~Scheduler();
+    virtual ~Scheduler() {}
 
     // Called when a new thread is ready
     virtual void handle_new_thread(std::shared_ptr<Thread> thread) = 0;
