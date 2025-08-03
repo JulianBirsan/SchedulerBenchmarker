@@ -3,8 +3,8 @@
 
 #include <queue>
 #include <memory>
-#include "../scheduler.h"
-#include "../thread.h"
+#include "../../src/scheduler.h"
+#include "../../src/thread.h"
 
 class RoundRobin : public Scheduler {
 private:

@@ -4,8 +4,8 @@
 
 #include "test_driver.h"
 #include "../src/simulator.h"
-#include "../src/schedulers/round_robin.h"
-#include "../src/schedulers/mlfq.h"
+#include "../examples/schedulers/round_robin.h"
+#include "../examples/schedulers/mlfq.h"
 
 void test_scheduler(TestDriver driver, std::string scheduler_name) {
     std::vector<Metrics> metrics = driver.run_all_tests("tests/threads");

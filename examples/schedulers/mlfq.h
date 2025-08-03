@@ -4,7 +4,7 @@
 #include <queue>
 #include <vector>
 
-#include "../scheduler.h"
+#include "../../src/scheduler.h"
 
 class MLFQ : public Scheduler {
 public:

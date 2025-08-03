@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -I/usr/local/include
 LDFLAGS = -L/usr/local/lib
 
 # Source files
-SRCS = src/main.cc src/thread.cc src/simulator.cc src/schedulers/round_robin.cc
+SRCS = src/main.cc src/thread.cc src/simulator.cc examples/schedulers/round_robin.cc
 OBJS = $(SRCS:.cc=.o)
 
 # Test files
@@ -11,7 +11,7 @@ TEST_SRCS = tests/test_driver.cc
 TEST_OBJS = $(TEST_SRCS:.cc=.o)
 
 # Tests main files
-TESTS_MAIN_SRCS = tests/main.cc tests/test_driver.cc src/thread.cc src/simulator.cc src/schedulers/round_robin.cc src/schedulers/mlfq.cc
+TESTS_MAIN_SRCS = tests/main.cc tests/test_driver.cc src/thread.cc src/simulator.cc examples/schedulers/round_robin.cc examples/schedulers/mlfq.cc
 TESTS_MAIN_OBJS = $(TESTS_MAIN_SRCS:.cc=.o)
 
 # Targets
