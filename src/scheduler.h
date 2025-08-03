@@ -12,7 +12,7 @@ public:
     // Called when a new thread is ready
     virtual void handle_new_thread(std::shared_ptr<Thread> thread) = 0;
     
-    // Called to select a thread to run
+    // Called to select a thread to run (return nullptr if none ready)
     virtual std::shared_ptr<Thread> select_thread() = 0;
 
     // Do something during a tick
