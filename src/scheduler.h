@@ -15,12 +15,6 @@ public:
     // Called to select a thread to run
     virtual std::shared_ptr<Thread> select_thread() = 0;
 
-    // Called when a thread is blocked
-    virtual void handle_thread_block(std::shared_ptr<Thread> thread) = 0;
-
-    // Called when a thread is done
-    virtual void handle_thread_done(std::shared_ptr<Thread> thread) = 0;
-
     // Do something during a tick
     virtual void handle_tick(std::shared_ptr<Thread> current_thread) = 0;
 };

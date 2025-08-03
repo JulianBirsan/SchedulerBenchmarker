@@ -17,7 +17,6 @@ void Simulator::simulate_events() {
         while (!event_queue.empty() && event_queue.top().time == current_time) {
             Event event = event_queue.top();
             event_queue.pop();
-            current_time = event.time;
 
             if (event.type == EventType::THREAD_ARRIVAL) {
                 event.thread->make_ready();
@@ -48,16 +47,15 @@ void Simulator::simulate_events() {
             } else if (current_thread->get_state() == ThreadState::READY) {
                 // the thread just got preempted
                 scheduler->handle_new_thread(current_thread);
-                current_thread = scheduler->select_thread();
+                current_thread = nullptr;
             } else if (current_thread->get_state() == ThreadState::TERMINATED) {
                 // TODO: log information
                 handle_thread_done(current_thread->get_arrival_time(), current_time);
                 current_thread = nullptr;
             }
+            // let the scheduler handle the time slice
+            scheduler->handle_tick(current_thread);
         }
-        
-        // let the scheduler handle the time slice
-        scheduler->handle_tick(current_thread);
     }
 }
 
