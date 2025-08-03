@@ -72,7 +72,6 @@ Create a new scheduler by inheriting from `Scheduler`:
 ```cpp
 #include "../../src/scheduler.h"
 #include "../../src/thread.h"
-#include <queue>
 
 class MyScheduler : public Scheduler {
 private:
